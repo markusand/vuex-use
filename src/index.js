@@ -1,6 +1,6 @@
 import { computed } from 'vue';
 import { useStore } from 'vuex';
-import { reduce, reduceNamespaced } from './utils';
+import { reduce, reduceNamespaced, objectPath } from './utils';
 
 const useGetters = namespace => {
 	const store = useStore();
@@ -27,4 +27,13 @@ const useMutations = namespace => {
 	));
 };
 
-export { useGetters, useActions, useMutations };
+const useModel = (getter, mutation, namespace) => {
+	const getters = useGetters(namespace);
+	const { [mutation]: mutate } = useMutations(namespace);
+	return computed({
+		get: () => objectPath(getters, getter).value,
+		set: value => mutate(value),
+	});
+};
+
+export { useGetters, useActions, useMutations, useModel };

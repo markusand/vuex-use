@@ -4,7 +4,7 @@ Helpers `useGetters` `useActions` `useMutations` to access the Vuex 4 store usin
 There is no `useState` available. Getters for state properties are created automatically and accessible from `useGetters`.
 
 ```javascript
-import { useGetters, useActions, useMutations } from 'vuex-use';
+import { useGetters, useActions, useMutations, useModel } from 'vuex-use';
 
 export default {
 	name: 'SomeComponent',
@@ -15,9 +15,13 @@ export default {
 		// Namespaced module 'auth'
 		const { login, logout } = useActions('auth');
 
+		// User has getter and setter and can be used directly in v-model
+		// Getter accepts dot notation to access nested objects
+		const username = useModel('user.username', 'SET_USERNAME');
+
 		loadUsers();
 
-		return { users, adminUsers, upgradeToAdmin, login, logout };
+		return { user, users, adminUsers, upgradeToAdmin, login, logout };
 	},
 };
 ```

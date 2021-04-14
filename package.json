@@ -1,6 +1,6 @@
 {
   "name": "vuex-use",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Use helpers for Vuex4 and Composition API",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",

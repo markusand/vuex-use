@@ -1,3 +1,5 @@
+import { ref, unref } from 'vue';
+
 export const reduce = (object, callback) => Object.keys(object)
 	.reduce((acc, name) => ({ ...acc, [name]: callback(name) }), {});
 
@@ -8,3 +10,6 @@ export const reduceNamespaced = (namespace, object, callback) => Object.keys(obj
 		acc[name] = callback(path);
 		return acc;
 	}, {});
+
+export const objectPath = (object, path) => path.split('.')
+	.reduce((acc, i) => ref(unref(acc)[i]), object);
