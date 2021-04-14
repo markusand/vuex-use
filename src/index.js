@@ -7,24 +7,24 @@ const useGetters = namespace => {
 	const state = namespace ? store.state[namespace] : store.state;
 	return {
 		...reduce(state, name => computed(() => state[name])),
-		...reduceNamespaced(namespace, store.getters, getter => {
-			return computed(() => store.getters[getter]);
-		}),
+		...reduceNamespaced(namespace, store.getters, getter => (
+			computed(() => store.getters[getter])
+		)),
 	};
 };
 
 const useActions = namespace => {
 	const store = useStore();
-	return reduceNamespaced(namespace, store._actions, action => {
-		return (payload, options) => store.dispatch(action, payload, options);
-	});
+	return reduceNamespaced(namespace, store._actions, action => (
+		(payload, options) => store.dispatch(action, payload, options)
+	));
 };
 
 const useMutations = namespace => {
 	const store = useStore();
-	return reduceNamespaced(namespace, store._mutations, mutation => {
-		return (payload, options) => store.commit(mutation, payload, options);
-	});
+	return reduceNamespaced(namespace, store._mutations, mutation => (
+		(payload, options) => store.commit(mutation, payload, options)
+	));
 };
 
 export { useGetters, useActions, useMutations };
